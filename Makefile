@@ -14,7 +14,7 @@
 #   limitations under the License.
 #
 REGISTRY_HOST=docker.io
-USERNAME=jepma
+USERNAME=jepmam
 NAME=aws-cli
 
 RELEASE_SUPPORT := /usr/local/bin/make-release-support
@@ -40,7 +40,7 @@ post-push:
 
 
 docker-build: .release
-	docker build -t $(IMAGE):$(VERSION) image/.
+	docker build -t $(IMAGE):$(VERSION) .
 	@DOCKER_MAJOR=$(shell docker -v | sed -e 's/.*version //' -e 's/,.*//' | cut -d\. -f1) ; \
 	DOCKER_MINOR=$(shell docker -v | sed -e 's/.*version //' -e 's/,.*//' | cut -d\. -f2) ; \
 	if [ $$DOCKER_MAJOR -eq 1 ] && [ $$DOCKER_MINOR -lt 10 ] ; then \
