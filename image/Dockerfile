@@ -26,6 +26,10 @@ RUN	true && \
   && pip install awscli --no-cache-dir && \
   (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
 
+#### ---- Workdir ---- ####
+
+WORKDIR /data
+
 #### ---- Entrypoint ---- ####
 
 ENTRYPOINT ["aws"]
