@@ -1,16 +1,23 @@
 # Alpine AWS
 
+[![](https://images.microbadger.com/badges/image/jepmam/aws-cli.svg)](https://microbadger.com/images/jepmam/aws-cli "Get your own image badge on microbadger.com")
+[![](https://images.microbadger.com/badges/version/jepmam/aws-cli.svg)](https://microbadger.com/images/jepmam/aws-cli "Get your own version badge on microbadger.com")
+
 ## Description
 
 This image is a wrapper for the Amazon command-line interface. The source of the `aws-cli` can be found [here](https://github.com/aws/aws-cli).
 
+## Latest
+
+The latest version is `0.0.7` and has a total size of 98MB.
+
 ## Installation
 
 ```bash
-$ docker pull jispro/aws-cli:latest
+$ docker pull jepmam/aws-cli:latest
 ```
 
-## build
+## Build
 
 ```bash
 $ make docker-build
@@ -35,5 +42,5 @@ $ docker run -it --rm --name buildtest --entrypoint=sh $(make get-buildname --qu
 Create alias in your `~/.bash_profile` to attach the `aws-cli` CLI onto the container.
 
 ```text
-alias aws-cli='docker run --rm -ti -v $(pwd):/data:rw -w /data jepmam/aws-cli:0.0.5 $@'
+alias aws-cli='docker run --rm -ti -v $(pwd):/data:rw -w /data jepmam/aws-cli:latest $@'
 ```
