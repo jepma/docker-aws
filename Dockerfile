@@ -54,6 +54,6 @@ WORKDIR /data
 
 
 #### ---- Entrypoint ---- ####
-# ENTRYPOINT ["/home/aws/aws/env/bin/aws"]
+ENTRYPOINT ["/home/aws/aws/env/bin/aws"]
 
 CMD ["/home/aws/aws/env/bin/aws"]
