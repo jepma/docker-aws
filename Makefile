@@ -51,6 +51,12 @@ docker-build: .release
 		docker tag $(IMAGE):$(VERSION) $(IMAGE):latest ; \
 	fi
 
+docker-shell: docker-build
+	docker run -it --rm --name maketest --entrypoint=sh $(IMAGE):$(VERSION) -l
+
+get-buildname:
+	echo $(IMAGE):$(VERSION)
+
 .release:
 	@echo "release=0.0.0" > .release
 	@echo "tag=$(NAME)-0.0.0" >> .release

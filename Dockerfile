@@ -1,14 +1,13 @@
 FROM alpine:edge
-MAINTAINER "Marcel Jepma" <m.jepma@jispro.nl>
+MAINTAINER "Marcel Jepma" <mjepma@xebia.com>
 
 ############################################################################
 #
-# 	Jispro AWS CLI Image
+# 	AWS CLI Image
 #
 ############################################################################
 
 #### ---- Labels ---- ####
-
 ARG VCS_REF
 
 LABEL org.label-schema.vcs-ref=$VCS_REF \
@@ -19,17 +18,34 @@ LABEL org.label-schema.vcs-ref=$VCS_REF \
 
 
 #### ---- Install and clean-up dependencies ---- ####
-
 RUN	true && \
 	apk add --no-cache --update \
-  py-pip \
-  && pip install awscli --no-cache-dir && \
+  py-pip && \
+  pip install virtualenv && \
   (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
 
-#### ---- Workdir ---- ####
 
+#### ---- CREATE USERS ---- ####
+# -D = Don't use password, -h is homedir, -g is GECOS Field
+RUN adduser -D aws -h /home/aws -g ''
+
+
+#### ---- CONFIG ---- ####
+# AWS CLI needs the PYTHONIOENCODING environment varialbe to handle UTF-8 correctly:
+ENV PYTHONIOENCODING=UTF-8
+
+
+#### ---- Install AWS ---- ####
+USER aws
+RUN \
+    mkdir -p /home/aws/aws && \
+    virtualenv /home/aws/aws/env && \
+    ./home/aws/aws/env/bin/pip install awscli --no-cache-dir
+
+
+#### ---- Workdir ---- ####
 WORKDIR /data
 
-#### ---- Entrypoint ---- ####
 
-ENTRYPOINT ["aws"]
+#### ---- Entrypoint ---- ####
+ENTRYPOINT ["/home/aws/aws/env/bin/aws"]
