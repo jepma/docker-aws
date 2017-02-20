@@ -40,12 +40,20 @@ USER aws
 RUN \
     mkdir -p /home/aws/aws && \
     virtualenv /home/aws/aws/env && \
-    ./home/aws/aws/env/bin/pip install awscli --no-cache-dir
+    ./home/aws/aws/env/bin/pip install awscli --no-cache-dir && \
+    (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
 
+USER root
+RUN \
+    ln -s /home/aws/aws/env/bin/aws /usr/local/bin/aws
+
+USER aws
 
 #### ---- Workdir ---- ####
 WORKDIR /data
 
 
 #### ---- Entrypoint ---- ####
-ENTRYPOINT ["/home/aws/aws/env/bin/aws"]
+# ENTRYPOINT ["/home/aws/aws/env/bin/aws"]
+
+CMD ["/home/aws/aws/env/bin/aws"]
