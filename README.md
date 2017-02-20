@@ -1,5 +1,9 @@
 # Alpine AWS
 
+## Description
+
+This image is a wrapper for the Amazon command-line interface. The source of the `aws-cli` can be found [here](https://github.com/aws/aws-cli).
+
 ## Installation
 
 ```bash
