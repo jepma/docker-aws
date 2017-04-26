@@ -28,6 +28,9 @@ SHELL=/bin/bash
 .PHONY: pre-build docker-build post-build build release patch-release minor-release major-release tag check-status check-release showver \
 	push do-push post-push
 
+demo:
+	$(shell . $(RELEASE_SUPPORT) ; tagExists "aws-cli-0.0.7")
+
 build: pre-build docker-build post-build
 
 pre-build:
@@ -52,7 +55,11 @@ docker-build: .release
 	fi
 
 docker-shell: docker-build
-	docker run -it --rm --name maketest --entrypoint=sh $(IMAGE):$(VERSION) -l
+	docker run -it --rm --name $(USERNAME)_$(NAME)_maketest --entrypoint=sh $(IMAGE):$(VERSION) -l
+
+docker-clean:
+	$(shell docker images $(USERNAME)/$(NAME) -q --filter "before=$(USERNAME)/$(NAME):latest" | xargs docker rmi -f)
+	@echo Cleaned older $(USERNAME)/$(NAME) images
 
 get-buildname:
 	echo $(IMAGE):$(VERSION)
