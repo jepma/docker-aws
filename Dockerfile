@@ -20,7 +20,7 @@ LABEL org.label-schema.vcs-ref=$VCS_REF \
 #### ---- Install and clean-up dependencies ---- ####
 RUN	true && \
 	apk add --no-cache --update \
-  py-pip && \
+  py-pip groff less && \
   pip install virtualenv && \
   (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
 
