@@ -38,6 +38,7 @@ ENV PYTHONIOENCODING=UTF-8
 #### ---- Install AWS ---- ####
 USER aws
 RUN \
+    mkdir -p /home/aws/.aws && \
     mkdir -p /home/aws/aws && \
     virtualenv /home/aws/aws/env && \
     ./home/aws/aws/env/bin/pip install awscli==1.11.104 --no-cache-dir && \
@@ -47,7 +48,7 @@ USER root
 RUN \
     ln -s /home/aws/aws/env/bin/aws /usr/local/bin/aws
 
-# USER aws
+USER aws
 
 #### ---- Workdir ---- ####
 WORKDIR /data
